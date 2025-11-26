@@ -1,0 +1,2 @@
+class ProjectPlan < ApplicationRecord
+end
