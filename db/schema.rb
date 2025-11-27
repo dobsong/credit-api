@@ -10,13 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_26_131150) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_27_154316) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   create_table "project_plans", force: :cascade do |t|
+    t.text "approach"
+    t.text "costings"
     t.datetime "created_at", null: false
+    t.text "data"
+    t.text "ethics"
+    t.boolean "has_started", default: false, null: false
+    t.text "laymans_summary"
+    t.text "platform"
+    t.boolean "previous_engagement", default: false, null: false
+    t.text "stakeholder_analysis"
+    t.text "support_materials"
     t.string "title"
     t.datetime "updated_at", null: false
+    t.string "user", null: false
+    t.text "vision"
   end
 end
