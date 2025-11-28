@@ -12,7 +12,7 @@ class ProjectPlansControllerTest < ActionDispatch::IntegrationTest
 
   test "should create project_plan" do
     assert_difference("ProjectPlan.count") do
-      post project_plans_url, params: { project_plan: { title: @project_plan.title } }, as: :json
+      post project_plans_url, params: { project_plan: { title: @project_plan.title, user: "test" } }, as: :json
     end
 
     assert_response :created
@@ -24,7 +24,7 @@ class ProjectPlansControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update project_plan" do
-    patch project_plan_url(@project_plan), params: { project_plan: { title: @project_plan.title } }, as: :json
+    patch project_plan_url(@project_plan), params: { project_plan: { title: @project_plan.title, user: "test" } }, as: :json
     assert_response :success
   end
 

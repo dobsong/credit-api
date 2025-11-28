@@ -46,6 +46,8 @@ class ProjectPlansController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def project_plan_params
-      params.permit(project_plan: [ :title, :previous_engagement, :has_started, :vision, :laymans_summary, :stakeholder_analysis, :approach, :data, :ethics, :platform, :support_materials, :costing ])
+      # todo - get rid of "default_user" one auth is in place
+      current_user = "default_user"
+      params.require(:project_plan).permit(:title, :previous_engagement, :has_started, :vision, :laymans_summary, :stakeholder_analysis, :approach, :data, :ethics, :platform, :support_materials, :costing).merge(user: current_user)
     end
 end
