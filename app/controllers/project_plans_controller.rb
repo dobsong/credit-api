@@ -46,8 +46,6 @@ class ProjectPlansController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def project_plan_params
-      params.permit(project_plan: [ :title, :previous_engagement, :has_started, :vision, :laymans_summary, :stakeholder_analysis, :approach, :data, :ethics, :platform, :support_materials, :costing])
+      params.permit(project_plan: [ :title, :previous_engagement, :has_started, :vision, :laymans_summary, :stakeholder_analysis, :approach, :data, :ethics, :platform, :support_materials, :costing ])
     end
 end
-
-
