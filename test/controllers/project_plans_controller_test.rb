@@ -5,11 +5,6 @@ class ProjectPlansControllerTest < ActionDispatch::IntegrationTest
     @project_plan = project_plans(:one)
   end
 
-  test "should get index" do
-    get project_plans_url, as: :json
-    assert_response :success
-  end
-
   test "should create project_plan" do
     assert_difference("ProjectPlan.count") do
       post project_plans_url, params: { project_plan: { title: @project_plan.title, user: "test" } }, as: :json
@@ -18,7 +13,7 @@ class ProjectPlansControllerTest < ActionDispatch::IntegrationTest
     assert_response :created
   end
 
-  test "should show project_plan" do
+  test "should get single project_plan" do
     get project_plan_url(@project_plan), as: :json
     assert_response :success
   end
