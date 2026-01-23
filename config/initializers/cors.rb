@@ -14,3 +14,15 @@
 #       methods: [:get, :post, :put, :patch, :delete, :options, :head]
 #   end
 # end
+
+# todo - setup cors properly for other environments
+Rails.application.config.middleware.insert_before 0, Rack::Cors do
+  allow do
+    origins "http://localhost:5173", "http://localhost:8080", "http://127.0.0.1:5173"
+
+    resource "*",
+      headers: :any,
+      methods: [ :get, :post, :put, :patch, :delete, :options, :head ],
+      expose: [ "Authorization" ]
+  end
+end
