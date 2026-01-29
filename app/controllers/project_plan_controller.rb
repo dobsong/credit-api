@@ -37,7 +37,7 @@ class ProjectPlanController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project_plan
-      @project_plan = ProjectPlan.find_by(user: current_user["preferred_username"])
+      @project_plan = ProjectPlan.find_or_create_by(user: current_user["preferred_username"])
     end
 
     # Only allow a list of trusted parameters through.
