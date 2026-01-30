@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_27_154316) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_29_000003) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "bibliography_references", force: :cascade do |t|
+    t.string "authors"
+    t.string "citation", null: false
+    t.datetime "created_at", null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.string "url", null: false
+    t.integer "year"
+    t.index ["citation"], name: "index_bibliography_references_on_citation", unique: true
+  end
 
   create_table "project_plans", force: :cascade do |t|
     t.text "approach"
@@ -30,5 +41,17 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_27_154316) do
     t.datetime "updated_at", null: false
     t.string "user", null: false
     t.text "vision"
+    t.index ["user"], name: "index_project_plans_on_user", unique: true
   end
+
+  create_table "reading_lists", force: :cascade do |t|
+    t.bigint "bibliography_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "user", null: false
+    t.index ["bibliography_id"], name: "index_reading_lists_on_bibliography_id"
+    t.index ["user", "bibliography_id"], name: "index_reading_lists_on_user_and_bibliography_id", unique: true
+  end
+
+  add_foreign_key "reading_lists", "bibliography_references", column: "bibliography_id"
 end
