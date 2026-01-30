@@ -5,7 +5,9 @@ class ReadingListsController < ApplicationController
   def index
     username = current_user["preferred_username"]
     @reading_lists = ReadingList.where(user: username).includes(:bibliography_reference)
-    render json: @reading_lists.map { |rl| rl.bibliography_reference }
+    # This is a bit non-standard, but we want to merge in the bibliography reference fields in the response even though there are two models
+    # This is an attempt to minimise storage redundancy whilst only exposing the meaningful part to the client
+    render json: @reading_lists.map { |rl| rl.bibliography_reference.as_json.merge(id: rl.id, created_at: rl.created_at, updated_at: rl.updated_at) }
   end
 
   # POST /reading_lists
