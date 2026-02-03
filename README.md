@@ -95,3 +95,42 @@ Keycloak settings are configured in `config/initializers/keycloak.rb`:
 - Resource access is scoped to the authenticated user's `preferred_username`
 - Reading list deletions verify ownership before allowing deletion
 - JWT signature verification ensures token integrity
+
+## Environment Variables
+
+### Database Configuration
+
+The following environment variables configure the PostgreSQL database connection:
+
+- `CREDIT_API_DATABASE_HOST` - Database host (default: `localhost`)
+- `CREDIT_API_DATABASE_PORT` - Database port (default: `5432`)
+- `CREDIT_API_DATABASE_NAME` - Database name (default: `credit_api_production`)
+- `CREDIT_API_DATABASE_USERNAME` - Database username (default: `credit_api`)
+- `CREDIT_API_DATABASE_PASSWORD` - Database password (required in production)
+
+**Note:** When running in Docker, use `172.17.0.1` (Docker bridge gateway) to connect to PostgreSQL on the host, or place containers on the same Docker network.
+
+### Keycloak Configuration
+
+The following environment variables configure Keycloak authentication:
+
+- `KEYCLOAK_URL` - Keycloak server URL (default: `http://localhost:8080`)
+- `KEYCLOAK_REALM` - Keycloak realm name (default: `credit`)
+- `KEYCLOAK_ISSUER` - (Optional) Explicit issuer for JWT validation. If not set, defaults to `{KEYCLOAK_URL}/realms/{KEYCLOAK_REALM}`
+
+**Example for Docker:**
+```bash
+sudo docker run -p 3000:80
+	-e RAILS_MASTER_KEY=<key from config/master.key>
+	-e CREDIT_API_DATABASE_NAME=credit_api_development
+	-e CREDIT_API_DATABASE_USERNAME=credit_api
+	-e  CREDIT_API_DATABASE_HOST=172.17.0.1
+	-e CREDIT_API_DATABASE_PORT=5432
+	-e CREDIT_API_DATABASE_PASSWORD=test
+	-e KEYCLOAK_REALM=credit
+	-e KEYCLOAK_URL=http://172.17.0.1:8080
+	-e KEYCLOAK_ISSUER=http://localhost:8080/realms/credit
+	 --name credit-api credit-api
+```
+
+**Note:** When running Keycloak in a separate Docker container, use the container name as hostname if on the same Docker network (note that the existing Dockerfile is not setup to do this), or `172.17.0.1` if exposed on the host.
