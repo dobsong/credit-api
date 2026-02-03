@@ -51,8 +51,10 @@ module KeycloakAuthenticatable
 
   def decode_token(token)
     public_key = KeycloakService.public_key
+    config = Rails.application.config.keycloak
+    issuer = config[:issuer] || KeycloakService.realm_url
 
-    # Decode and verify the JWT (could enable audience verification, but seems unnecessary as the realm will only be issuing tokens for this one purpose)
+    # Decode and verify the JWT
     decoded = JWT.decode(
       token,
       public_key,
@@ -60,7 +62,7 @@ module KeycloakAuthenticatable
       {
         algorithm: "RS256",
         verify_iss: true,
-        iss: KeycloakService.realm_url,
+        iss: issuer,
         verify_aud: false  # Set to true and specify aud if needed
       }
     )
