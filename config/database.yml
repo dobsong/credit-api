@@ -87,18 +87,20 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: credit_api_production
-    username: credit_api
+    database: <%= ENV.fetch("CREDIT_API_DATABASE_NAME") { "credit_api_production" } %>
+    username: <%= ENV.fetch("CREDIT_API_DATABASE_USERNAME") { "credit_api" } %>
     password: <%= ENV["CREDIT_API_DATABASE_PASSWORD"] %>
+    host: <%= ENV.fetch("CREDIT_API_DATABASE_HOST") { "localhost" } %>
+    port: <%= ENV.fetch("CREDIT_API_DATABASE_PORT") { "5432" } %>
   cache:
     <<: *primary_production
-    database: credit_api_production_cache
+    database: <%= ENV.fetch("CREDIT_API_DATABASE_NAME") { "credit_api_production" } %>
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: credit_api_production_queue
+    database: <%= ENV.fetch("CREDIT_API_DATABASE_NAME") { "credit_api_production" } %>
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: credit_api_production_cable
+    database: <%= ENV.fetch("CREDIT_API_DATABASE_NAME") { "credit_api_production" } %>
     migrations_paths: db/cable_migrate
