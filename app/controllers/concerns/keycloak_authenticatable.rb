@@ -52,7 +52,7 @@ module KeycloakAuthenticatable
   def decode_token(token)
     public_key = KeycloakService.public_key
 
-    # Decode and verify the JWT
+    # Decode and verify the JWT (could enable audience verification, but seems unnecessary as the realm will only be issuing tokens for this one purpose)
     decoded = JWT.decode(
       token,
       public_key,
