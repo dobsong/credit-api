@@ -110,6 +110,9 @@ The following environment variables configure the PostgreSQL database connection
 
 **Note:** When running in Docker, use `172.17.0.1` (Docker bridge gateway) to connect to PostgreSQL on the host, or place containers on the same Docker network.
 
+### CORS
+Allowed origins can be set via the `CORS_ORIGINS` environment variable, which should be a comma-separated list of allowed origins. If not set, it defaults to allowing localhost on port 5173.
+
 ### Keycloak Configuration
 
 The following environment variables configure Keycloak authentication:
